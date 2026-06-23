@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Hunch — GitHub Pages landing (docs/index.html). Self-contained. Enable in repo Settings → Pages → Source: branch "main", folder "/docs". -->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hunch — Test your hunch before you build it</title>
+<meta name="description" content="Hunch turns any startup idea into a real-looking landing page with an email waitlist, so you can measure genuine demand before you build. Open-source Claude Skill, MIT." />
+<meta property="og:title" content="Hunch — Test your hunch before you build it" />
+<meta property="og:description" content="Validate a startup idea before building it. A real-looking landing page + waitlist, in minutes. Honest fake-it-till-you-make-it. Open source." />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#0E0F0B; --surface:#16180F; --surface-2:#1C1F14; --raised:#23271A;
+  --text:#F2F3EC; --muted:#9DA08D; --faint:#6E7160;
+  --accent:#C9F23B;            /* signal lime */
+  --accent-ink:#16180F;        /* text on lime */
+  --indigo:#5B53FF;            /* secondary spark */
+  --line:rgba(255,255,255,.10); --line-2:rgba(255,255,255,.18);
+  --font:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+  --maxw:1080px; --ease:cubic-bezier(.2,.8,.2,1); --spring:cubic-bezier(.34,1.4,.64,1);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3{margin:0 0 .4em;font-weight:800;letter-spacing:-.03em;line-height:1.04}
+h1{font-size:clamp(2.6rem,6.5vw,4.6rem);font-weight:900}
+h2{font-size:clamp(1.9rem,4.2vw,2.9rem)}
+h3{font-size:clamp(1.1rem,2vw,1.32rem);font-weight:700;letter-spacing:-.02em}
+p{margin:0 0 1rem}
+a{color:var(--accent)}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+section{padding:clamp(60px,9vw,110px) 0;position:relative}
+.lead{font-size:clamp(1.08rem,1.7vw,1.3rem);color:var(--muted);max-width:60ch}
+.mono{font-family:var(--mono)}
+.eyebrow{font-family:var(--mono);font-weight:600;text-transform:uppercase;letter-spacing:.14em;font-size:.76rem;color:var(--accent);display:inline-flex;align-items:center;gap:.6rem;margin-bottom:1rem}
+.eyebrow::before{content:"";width:24px;height:2px;background:var(--accent)}
+.center{text-align:center}.center .eyebrow{justify-content:center}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:.55rem;background:var(--accent);color:var(--accent-ink);font-weight:700;font-size:1rem;padding:.8rem 1.4rem;border:0;border-radius:11px;cursor:pointer;text-decoration:none;letter-spacing:-.01em;
+  transition:transform .15s var(--ease),box-shadow .15s var(--ease),background .15s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 14px 30px -12px rgba(201,242,59,.55)}
+.btn:active{transform:translateY(0)}
+.btn--ghost{background:transparent;color:var(--text);border:1px solid var(--line-2)}
+.btn--ghost:hover{background:var(--surface-2);border-color:var(--accent)}
+.btn svg{width:18px;height:18px;fill:currentColor}
+.btn:focus-visible,a:focus-visible{outline:3px solid var(--indigo);outline-offset:3px}
+
+/* nav */
+header.nav{position:sticky;top:0;z-index:50;background:rgba(14,15,11,.72);backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:border-color .3s,background .3s}
+header.nav.scrolled{border-bottom-color:var(--line);background:rgba(14,15,11,.92)}
+.nav__row{display:flex;align-items:center;justify-content:space-between;height:66px}
+.brand{display:flex;align-items:center;gap:.55rem;font-weight:900;font-size:1.3rem;letter-spacing:-.04em;color:var(--text);text-decoration:none}
+.brand .mk{width:24px;height:24px;border-radius:6px;background:var(--accent);display:grid;place-items:center;color:var(--accent-ink);font-size:14px;font-weight:900}
+.nav__links{display:flex;gap:22px;align-items:center}
+.nav__links a:not(.btn){color:var(--muted);text-decoration:none;font-weight:500;font-size:.95rem}
+.nav__links a:not(.btn):hover{color:var(--text)}
+.nav__links .btn{padding:.6rem 1rem;font-size:.92rem}
+@media(max-width:820px){.nav__links a:not(.btn){display:none}}
+
+/* hero */
+.hero__grid{display:grid;grid-template-columns:1.1fr .9fr;gap:46px;align-items:center}
+@media(max-width:920px){.hero__grid{grid-template-columns:1fr;gap:36px}}
+.badges{display:flex;gap:8px;flex-wrap:wrap;font-family:var(--mono);font-size:.74rem;margin-bottom:1.4rem}
+.badges span{border:1px solid var(--line);border-radius:6px;padding:.28rem .6rem;color:var(--muted)}
+.hero h1 .hl{color:var(--accent)}
+.hero .lead{margin:1.3rem 0 1.9rem;color:#D5D7C8}
+.hero__cta{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.hero__note{font-family:var(--mono);font-size:.82rem;color:var(--faint);margin-top:1rem}
+
+/* hero signal card (dogfood motif: a live demand counter) */
+.signal{background:linear-gradient(180deg,var(--surface) 0%,var(--surface-2) 100%);border:1px solid var(--line);border-radius:18px;padding:30px;box-shadow:0 40px 80px -40px rgba(0,0,0,.8);position:relative;overflow:hidden}
+.signal::before{content:"";position:absolute;inset:-40% 30% auto -10%;height:200px;background:radial-gradient(60% 60% at 30% 0,rgba(201,242,59,.14),transparent 70%)}
+.signal__top{display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:.78rem;color:var(--muted);position:relative}
+.signal__live{display:inline-flex;align-items:center;gap:.45rem;color:var(--accent)}
+.signal__live .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 0 rgba(201,242,59,.6);animation:pulse 1.8s var(--ease) infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(201,242,59,.5)}70%{box-shadow:0 0 0 12px rgba(201,242,59,0)}100%{box-shadow:0 0 0 0 rgba(201,242,59,0)}}
+.signal__num{font-weight:900;font-size:clamp(3.4rem,9vw,5rem);letter-spacing:-.04em;line-height:1;margin:.5rem 0 .1rem;position:relative}
+.signal__label{font-family:var(--mono);font-size:.85rem;color:var(--muted);position:relative}
+.spark{display:flex;align-items:flex-end;gap:5px;height:60px;margin-top:18px;position:relative}
+.spark i{flex:1;background:var(--raised);border-radius:3px 3px 0 0;transform-origin:bottom;transform:scaleY(.15);animation:grow .7s var(--ease) forwards}
+.spark i:last-child{background:var(--accent)}
+@keyframes grow{to{transform:scaleY(var(--h))}}
+.signal__foot{margin-top:16px;font-family:var(--mono);font-size:.74rem;color:var(--faint);position:relative}
+
+/* generic */
+.grid{display:grid;gap:18px}
+.cols-2{grid-template-columns:1fr 1fr}.cols-3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:820px){.cols-2,.cols-3{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:26px;transition:transform .25s var(--ease),border-color .25s}
+.card:hover{transform:translateY(-4px);border-color:var(--line-2)}
+.card .ic{font-size:1.5rem;margin-bottom:.6rem;display:block}
+.card .mech{color:var(--muted);font-size:.96rem;margin:0}
+
+/* flow / steps */
+.steps{counter-reset:s;display:grid;gap:16px;margin-top:2rem}
+.step{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px;counter-increment:s}
+.step::before{content:counter(s);font-family:var(--mono);font-weight:700;color:var(--accent-ink);background:var(--accent);width:42px;height:42px;border-radius:10px;display:grid;place-items:center;font-size:1.1rem}
+.step h3{margin:.2rem 0 .3rem}.step p{margin:0;color:var(--muted)}
+
+/* problem split */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:2rem}
+@media(max-width:720px){.split{grid-template-columns:1fr}}
+.split__col{border-radius:14px;padding:26px;border:1px solid var(--line)}
+.split__bad{background:var(--surface)}
+.split__good{background:var(--surface-2);border-color:var(--accent);box-shadow:inset 3px 0 0 var(--accent)}
+.split__col h3{display:flex;gap:.5rem;align-items:center}
+.split__col ul{list-style:none;padding:0;margin:.7rem 0 0;display:grid;gap:.55rem;color:#D5D7C8}
+.split__col li{padding-left:26px;position:relative}
+.split__bad li::before{content:"✕";position:absolute;left:0;color:#E8694A;font-family:var(--mono)}
+.split__good li::before{content:"→";position:absolute;left:0;color:var(--accent);font-family:var(--mono);font-weight:700}
+
+/* honesty callout */
+.honest{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:clamp(28px,4vw,44px);max-width:840px;margin:0 auto;text-align:center}
+.honest .pill{display:inline-block;font-family:var(--mono);font-size:.74rem;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);border:1px solid var(--line-2);border-radius:6px;padding:.3rem .7rem;margin-bottom:1.2rem}
+
+/* quick start mini */
+.qs{display:grid;gap:12px;margin-top:2rem;counter-reset:q}
+.qrow{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:baseline;border-bottom:1px solid var(--line);padding:14px 0;counter-increment:q}
+.qrow:last-child{border-bottom:0}
+.qrow::before{content:counter(q);font-family:var(--mono);font-weight:700;color:var(--accent)}
+.qrow b{font-weight:700}.qrow span{color:var(--muted)}
+.qrow code{font-family:var(--mono);background:var(--raised);border:1px solid var(--line);border-radius:5px;padding:.1rem .4rem;font-size:.86em;color:var(--accent)}
+
+/* final */
+.final{text-align:center;background:linear-gradient(180deg,transparent,var(--surface))}
+.final h2{max-width:18ch;margin-inline:auto}
+
+/* footer */
+footer.ft{border-top:1px solid var(--line);padding:40px 0;color:var(--faint)}
+.ft__row{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:center}
+.ft__links{display:flex;gap:18px;flex-wrap:wrap}
+.ft__links a{color:var(--muted);text-decoration:none;font-size:.92rem;display:inline-flex;align-items:center;gap:.4rem}
+.ft__links a:hover{color:var(--text)}
+.ft__links svg{width:16px;height:16px;fill:currentColor}
+.ft small{display:block;margin-top:14px;font-family:var(--mono);font-size:.78rem}
+
+/* motion */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.load>*{opacity:0;animation:rise .6s var(--ease) forwards}
+@keyframes rise{to{opacity:1;transform:none}}
+.load>*:nth-child(1){animation-delay:.05s}.load>*:nth-child(2){animation-delay:.14s}
+.load>*:nth-child(3){animation-delay:.24s}.load>*:nth-child(4){animation-delay:.34s}.load>*:nth-child(5){animation-delay:.44s}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}*{animation:none!important}
+  .reveal{opacity:1!important;transform:none!important;transition:none}
+  .spark i{transform:scaleY(var(--h))}
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav__row">
+    <a class="brand" href="#top"><span class="mk">◎</span>Hunch</a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#how">How it works</a>
+      <a href="#get">What you get</a>
+      <a href="#start">Quick start</a>
+      <a class="btn" href="https://github.com/gripati/Hunch"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>Star</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero__grid">
+    <div class="load">
+      <div class="badges"><span>★ Open source</span><span>MIT licensed</span><span>a Claude Skill</span><span>no-code friendly</span></div>
+      <h1>Test your <span class="hl">hunch</span> before you build it.</h1>
+      <p class="lead">Hunch turns any startup idea into a complete, real-looking landing page with an email waitlist — so you measure genuine demand <em>before</em> writing a line of product code. Fake it till you make it, honestly.</p>
+      <div class="hero__cta">
+        <a class="btn" href="#start">Get started →</a>
+        <a class="btn btn--ghost" href="https://github.com/gripati/Hunch"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>Star on GitHub</a>
+      </div>
+      <p class="hero__note">Describe an idea → get a landing page + waitlist → measure real demand.</p>
+    </div>
+
+    <div class="signal" aria-label="Example demand signal">
+      <div class="signal__top"><span>WAITLIST · your-idea.com</span><span class="signal__live"><span class="dot"></span>live</span></div>
+      <div class="signal__num" id="count">0</div>
+      <div class="signal__label">signups this week</div>
+      <div class="spark" id="spark" aria-hidden="true"></div>
+      <div class="signal__foot">▲ real emails = real demand — not a guess</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM / SHIFT -->
+<section class="reveal" id="why">
+  <div class="wrap">
+    <span class="eyebrow">Why Hunch</span>
+    <h2 style="max-width:18ch">Most ideas die after months of building. Flip the order.</h2>
+    <p class="lead">The expensive way is to build first and hope. The smart way is to put a real-looking page in front of real people and let the signups tell you the truth — in minutes, not months.</p>
+    <div class="split">
+      <div class="split__col split__bad">
+        <h3>Build first, hope later</h3>
+        <ul><li>Months of work before any feedback</li><li>Launch to silence</li><li>"Why did nobody want this?"</li></ul>
+      </div>
+      <div class="split__col split__good">
+        <h3>Validate first with Hunch</h3>
+        <ul><li>A real-looking page + waitlist in minutes</li><li>Share it, collect real signups</li><li>Build only what people already want</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="reveal" id="how">
+  <div class="wrap">
+    <span class="eyebrow">How it works</span>
+    <h2>Three steps from idea to evidence.</h2>
+    <div class="steps">
+      <div class="step"><div><h3>Describe your idea</h3><p>Tell Claude what you're thinking of building, in one sentence. Hunch handles the strategy, copy, and design.</p></div></div>
+      <div class="step"><div><h3>Get a real-looking landing page</h3><p>A finished, responsive page with a waitlist email pop-up on every button — picked from 50 design styles so it never looks template-y.</p></div></div>
+      <div class="step"><div><h3>Share it and measure demand</h3><p>Put it online for free, post the link, and watch the signups. Lots of interest = a hunch worth building. Silence = months saved.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT YOU GET -->
+<section class="reveal" id="get">
+  <div class="wrap">
+    <span class="eyebrow">What you get</span>
+    <h2>One prompt. A complete validation kit.</h2>
+    <div class="grid cols-3" style="margin-top:2rem">
+      <div class="card"><span class="ic">🖼️</span><h3>A finished landing page</h3><p class="mech">Responsive, fast, genuinely designed — with a waitlist email capture on every call-to-action.</p></div>
+      <div class="card"><span class="ic">🎨</span><h3>50 design styles</h3><p class="mech">Hunch varies color, buttons, panels, corners, and motion — so it never looks AI-generated.</p></div>
+      <div class="card"><span class="ic">🔎</span><h3>Found by search & AI</h3><p class="mech">Built-in SEO, schema.org, sitemap, robots, and llms.txt so engines and AI answers can cite it.</p></div>
+      <div class="card"><span class="ic">🎬</span><h3>Ad creatives on demand</h3><p class="mech">Ask for "5 TikTok ads" — get platform-ready video ads with 3-second hooks, each one different.</p></div>
+      <div class="card"><span class="ic">✅</span><h3>Real logos, real honesty</h3><p class="mech">Official brand logos where needed. Never fake reviews, fake users, or fake scarcity.</p></div>
+      <div class="card"><span class="ic">📄</span><h3>Yours to own</h3><p class="mech">Plain HTML you can host anywhere, edit yourself, or hand to a developer.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- HONESTY -->
+<section class="reveal">
+  <div class="wrap">
+    <div class="honest">
+      <span class="pill">The honest part</span>
+      <h2>A real test, not a fake one.</h2>
+      <p class="lead" style="margin:0 auto">Hunch will not invent testimonials, statistics, user counts, or scarcity — because validating with fake proof only proves the lie, and costs you your credibility. The page is persuasive because it's well-crafted. The signal is trustworthy because the emails are real.</p>
+    </div>
+  </div>
+</section>
+
+<!-- QUICK START -->
+<section class="reveal" id="start">
+  <div class="wrap">
+    <span class="eyebrow">Quick start · no coding required</span>
+    <h2>Live in a few minutes.</h2>
+    <p class="lead">You'll need access to <a href="https://claude.ai">Claude</a> (a Pro or Max plan is the easiest path). Then:</p>
+    <div class="qs">
+      <div class="qrow"><div><b>Add the skill to Claude.</b> <span>Download <code>hunch.skill</code> from the repo and upload it in claude.ai → Settings → Capabilities (Skills).</span></div></div>
+      <div class="qrow"><div><b>Ask for your page.</b> <span>"Use Hunch to build a validation landing page for [your idea]." Download the HTML it gives you.</span></div></div>
+      <div class="qrow"><div><b>Put it online — free.</b> <span>Drag the HTML onto <a href="https://app.netlify.com/drop">Netlify Drop</a> for an instant live link.</span></div></div>
+      <div class="qrow"><div><b>Collect emails — free.</b> <span>Make a form at <a href="https://formspree.io">Formspree</a>, then replace <code>[SET_ENDPOINT]</code> in the HTML with your form URL.</span></div></div>
+      <div class="qrow"><div><b>Share & measure.</b> <span>Post the link where your audience is. Every signup is a vote.</span></div></div>
+    </div>
+    <div class="hero__cta" style="margin-top:2rem">
+      <a class="btn" href="https://github.com/gripati/Hunch#-quick-start-no-coding-required">Read the full guide →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL -->
+<section class="final reveal">
+  <div class="wrap">
+    <h2>Got a hunch worth testing?</h2>
+    <p class="lead" style="margin:0 auto 1.6rem">Find out if anyone wants it — before you build it.</p>
+    <div class="hero__cta" style="justify-content:center">
+      <a class="btn" href="#start">Get started →</a>
+      <a class="btn btn--ghost" href="https://github.com/gripati/Hunch"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>Star on GitHub</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="ft">
+  <div class="wrap">
+    <div class="ft__row">
+      <a class="brand" href="#top" style="font-size:1.1rem"><span class="mk" style="width:20px;height:20px;font-size:12px">◎</span>Hunch</a>
+      <nav class="ft__links" aria-label="Footer">
+        <a href="https://github.com/gripati/Hunch"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>GitHub</a>
+        <a href="https://github.com/gripati/Hunch#readme">Docs</a>
+        <a href="https://claude.ai">Claude</a>
+      </nav>
+    </div>
+    <small>MIT © 2026 Emre Pehlevan · Built as a skill for Claude · Brand icons via Simple Icons (CC0)</small>
+  </div>
+</footer>
+
+<script>
+  // sticky nav border
+  var nav=document.querySelector('header.nav');
+  addEventListener('scroll',function(){nav.classList.toggle('scrolled',scrollY>8);},{passive:true});
+
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // scroll reveals
+  var els=document.querySelectorAll('.reveal');
+  if(reduce||!('IntersectionObserver'in window)){els.forEach(function(e){e.classList.add('in');});}
+  else{var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});els.forEach(function(e){io.observe(e);});}
+
+  // sparkline bars (build once)
+  (function(){
+    var spark=document.getElementById('spark'); if(!spark)return;
+    var heights=[.2,.32,.28,.45,.4,.6,.55,.72,.68,.88,.82,1];
+    heights.forEach(function(h,i){var b=document.createElement('i');b.style.setProperty('--h',h);b.style.animationDelay=(i*.06)+'s';spark.appendChild(b);});
+  })();
+
+  // count-up demand counter (illustrative)
+  (function(){
+    var el=document.getElementById('count'); if(!el)return; var target=247;
+    if(reduce){el.textContent=target;return;}
+    var start=null;
+    function step(ts){ if(!start)start=ts; var p=Math.min((ts-start)/1600,1); var e=1-Math.pow(1-p,3);
+      el.textContent=Math.round(target*e); if(p<1)requestAnimationFrame(step);
+      else{ // gentle "live" ticks
+        setInterval(function(){ target+=Math.floor(Math.random()*3); el.textContent=target; },4200);
+      }
+    }
+    requestAnimationFrame(step);
+  })();
+</script>
+</body>
+</html>
