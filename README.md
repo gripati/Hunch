@@ -53,6 +53,8 @@ Then you decide with evidence instead of a guess: **build it, change it, or drop
 
 ## 🚀 Quick start (no coding required)
 
+> 📘 **Brand new to this?** Follow the hand-held, example-by-example **[No-Code Guide](GUIDE.md)** — it covers every click from installing the skill to reading your first signups. The steps below are the short version.
+
 You need access to **Claude** (a [claude.ai](https://claude.ai) **Pro** or **Max** plan is the easiest path).
 
 **1. Get the skill file.** Download [`hunch.skill`](hunch.skill) from this repo (open the file and click **Download**).
