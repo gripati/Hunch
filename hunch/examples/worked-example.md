@@ -71,7 +71,7 @@ proof (known): 14 clients, 2 testimonials.
 
 This drives the hero, the offer name, and the final CTA (all assert the same promise). ATLAS then writes:
 - **`strategy.md`** per `strategy-blueprint.md` — including the objection-handling section (price vs. one deal; "won't sound like me" → voice-capture + rewrite guarantee; "agencies are generic" → the differentiator) and a proof-collection plan.
-- **`index.html`** per `website-blueprint.md` — re-themed for this product (a confident, founder-to-founder identity, *not* the invoicing scaffold's palette), leading with the pain, selling the transformation, proving with the 14-client number + real testimonials + labeled placeholders, presenting the Founder Voice Engine offer with its rewrite guarantee, value-anchored pricing against one inbound deal, and a final ego+fear close.
+- **`index.html`** per `website-blueprint.md` — re-themed for this product (a confident, founder-to-founder identity, *not* the invoicing scaffold's palette), leading with the pain, selling the transformation, proving with the 14-client number + real testimonials + labeled placeholders, presenting the Founder Voice Engine offer with its rewrite guarantee, value-anchored pricing against one inbound deal, and a final ego+fear close. AURORA picks the design language (here a *refined-SaaS × editorial* mix, rejecting the default dark-SaaS look) and ships its **juice contract** from `motion-toolkit.md`: a sequenced hero load, a word-reveal headline, the 14-client figure counting up, cursor-tracked spotlight cards, a magnetic primary CTA, and one signature moment (a "DM inbox filling up" animation that *shows* the promise) — all reduced-motion-safe.
 
 ---
 

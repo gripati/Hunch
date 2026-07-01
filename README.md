@@ -121,7 +121,7 @@ You don't manage the steps — Hunch coordinates a team of specialist agents and
 Hunch is a coordinated team of **19 specialist agents** (orchestrated by **ATLAS**):
 
 - **10 sales‑psychology agents** — emotion, transformation, pain, demand, benefits, ego+fear, social proof, value pricing, specificity, and offer strength.
-- **4 discovery & design agents** — SEO, GEO (being cited inside AI answers), AEO (schema / answer‑first), and a UI/UX + motion designer that picks from **50 design languages**.
+- **4 discovery & design agents** — SEO, GEO (being cited inside AI answers), AEO (schema / answer‑first), and a UI/UX + motion designer that picks from **50 design languages** and ships a **full juice‑and‑polish motion system** (magnetic buttons, spotlight cards, count‑up tickers, scroll‑stacking, animated backgrounds) from a vanilla motion toolkit — no static templates.
 - **5 ad‑creative agents** — a creative director, a hook specialist, concept & per‑feature creatives, and a format engineer that renders each ad at exact platform resolutions.
 
 Everything they need lives in [`hunch/SKILL.md`](hunch/SKILL.md) and [`hunch/references/`](hunch/references/) — plain Markdown you can read and improve.
@@ -136,7 +136,7 @@ Everything they need lives in [`hunch/SKILL.md`](hunch/SKILL.md) and [`hunch/ref
 
 **Is the landing page mine?** Yes — it's plain HTML you own and can host anywhere, edit, or hand to a developer.
 
-**Will it look like every other AI page?** No — Hunch deliberately avoids default looks and picks from 50 distinct design languages, varying not just color but buttons, panels, corners, and motion.
+**Will it look like every other AI page?** No — Hunch deliberately avoids default looks and picks from 50 distinct design languages, varying not just color but buttons, panels, corners, and motion. And it won't be *static*: every page ships a juice contract — a sequenced load, live count‑up numbers, cursor‑tracked spotlight cards, a magnetic CTA, an animated background, and one signature moment — all reduced‑motion‑safe.
 
 **Can I use it for a product that already exists?** Yes — ask for **launch mode** and the buttons go to signup/checkout instead of a waitlist.
 

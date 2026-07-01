@@ -7,7 +7,7 @@ AURORA does not have one house style. It chooses, per product, the design langua
 - **Buttons** — shape, border, shadow, fill, and press behavior (hard-offset block vs frosted capsule vs glossy pill vs outline-glow).
 - **Panels / cards** — radius, border, shadow, surface treatment, and whether they look like the product's real artifacts.
 - **Titles / type** — the type system, weights, scale, and tracking idiom.
-- **Motion** — the easing/transition personality (snappy vs floaty vs glitchy vs physical).
+- **Motion** — the easing/transition personality (snappy vs floaty vs glitchy vs physical) **and the signature juice**: the specific animated moment the site is built around. Each language routes to concrete, ready-to-paste recipes in **`references/motion-toolkit.md`** via its **[Signature juice by family](motion-toolkit.md#signature-juice-by-family)** map — a terminal language gets a typewriter + scramble + dot-grid cursor spotlight; a premium language gets shine-sweeps + Ken-Burns + shimmer text; a playful language gets a magnetic CTA + cursor trail + squash press. The chosen language must feel *alive*, never static.
 - **The ad-creative video idiom** — how its video creatives cut, transition, and animate text (see "Per-style video idioms" below and `ad-creatives.md`). The same product gets a *different* feeling site **and** a different feeling video per language.
 
 **Vary the material system per project** — corner-radius, borders, shadows, button shape, and surfaces must visibly differ across builds (0px hard edges here, 24px pillowy there). Sameness of radius/shadow is itself an AI tell.
@@ -16,7 +16,8 @@ AURORA does not have one house style. It chooses, per product, the design langua
 1. Read the product's spirit (from `ui-ux-motion.md` §1) and pick the **2–3 candidate languages** that fit. Reject the first/obvious one if it's the default for that product category.
 2. Choose **one** to lead, or a deliberate **mix** (e.g. "minimal base + one neo-brutalist accent moment"). State the choice and why.
 3. Pull that language's **radius / border / shadow / button / surface / color / type / motion** traits into the design tokens. **Vary these per project** — a site should not always use the same 12px radius and soft shadow.
-4. For **ad creatives**, rotate the visual treatment across languages so each creative in a set looks different (see `ad-creatives.md`).
+4. Pull the language's **signature juice** — look up its family in `motion-toolkit.md` → [Signature juice by family](motion-toolkit.md#signature-juice-by-family), then ship the toolkit's §0 baseline + that family's ambient background, signature moment, and button/card micro-interactions. The material system and the motion system come from the *same* language, so the site feels of one piece.
+5. For **ad creatives**, rotate the visual treatment across languages so each creative in a set looks different (see `ad-creatives.md`).
 
 Each entry: *When to use* + the concrete material traits. Traits are starting points — tune to the brief.
 
@@ -259,12 +260,19 @@ When a style is chosen, its **ad-creative videos** inherit its idiom — the cut
 
 ---
 
+## Per-style site-motion signature
+
+Just as each style has a **video** idiom, each has a **site-motion** signature — the ambient background, signature moment, and micro-interactions that make the *page* feel alive. The families map one-to-one to the video idioms above; the concrete, copy-paste vanilla recipes for each are in **`references/motion-toolkit.md` → [Signature juice by family](motion-toolkit.md#signature-juice-by-family)**. Ship the toolkit's §0 baseline on every site, then pull the chosen language's family row: its ambient (§4), signature moment (§1/§5/§6), and button/card juice (§2/§3). Site juice and video idiom share the family, so a product's page and its ads read as one brand.
+
+---
+
 ## Selecting (and mixing)
 
 - **Fit the spirit, reject the default.** From the 2–3 candidates, lead with the one that fits the product's world *and* isn't the obvious category cliché (e.g. for a dev tool, "retro terminal" or "dark techno" beats default "refined SaaS"; for a kids' app, "claymorphism" or "casual mobile-game" beats generic "soft").
 - **Mix with intent.** A strong combo is a calm base + one expressive accent moment: e.g. *modern minimal* base with a *neo-brutalist* pricing card, or *editorial* base with a *terminal* signature. Never mix more than two, and let one dominate.
 - **Vary the material system — not just color.** Commit the chosen language's **radius, border, shadow, button shape, and surface treatment** into the tokens. Across projects these must visibly differ (0px hard-edged here, 24px pillowy there; flat-offset shadows here, ambient depth there). Sameness of radius/shadow is itself an AI tell.
-- **State the decision** in the design system / `design_system` Brief field: the language(s), why, and the resulting radius/border/shadow/button/surface tokens.
+- **Commit the signature juice, not just the look.** A committed material system with no motion still reads as static. Ship the language's family row from `motion-toolkit.md` → [Signature juice by family](motion-toolkit.md#signature-juice-by-family): the §0 baseline (reveal harness + hero load sequence), one ambient background, one signature moment, and live micro-interactions on every button and card. A neo-brutalist site's motion is snappy and abrupt; a soft site's is bouncy; a premium site's is slow shine-sweeps — the motion personality comes from the *same* language as the material.
+- **State the decision** in the design system / `design_system` Brief field: the language(s), why, the resulting radius/border/shadow/button/surface tokens, **and the signature juice recipes** (which toolkit family + the specific moments chosen).
 
 ## Driving ad-creative variety
 When producing a *set* of ad creatives, rotate the visual treatment across languages (within brand sense) so each creative looks distinct — one feed-native and clean, one bold neo-brutalist, one glassy/premium, one game-UI energetic — giving the user genuinely different alternatives to A/B test. See `ad-creatives.md`.

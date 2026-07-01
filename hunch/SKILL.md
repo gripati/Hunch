@@ -1,9 +1,9 @@
 ---
 name: hunch
-description: Validate a startup idea before you build it. Hunch turns any idea into a complete, real-looking landing page with an email waitlist at every call-to-action, so you measure genuine demand first — fake it till you make it, honestly. 19 coordinated agents apply 10 sales-psychology principles, four discovery-and-design experts (SEO; GEO for being cited in AI answers; AEO via schema; a UI/UX designer that picks from 50 design languages with polished motion), and a five-agent ad-creative squad producing platform-ready 9:16/1:1/16:9 video ads with 3-second hooks for TikTok, Reels, Meta and Google. Real brand logos, never fabricated proof. Use it to validate, launch, or market a product — landing or waitlist pages, copy, positioning, pricing, conversion, SEO, GEO, AEO, or ad creatives. Produces English strategy, a designed validation or launch site, schema/sitemap/robots/llms.txt, and ad-creative videos.
+description: Validate a startup idea before you build it. Hunch turns any idea into a complete, real-looking landing page with an email waitlist at every call-to-action, so you measure genuine demand first — fake it till you make it, honestly. 19 coordinated agents apply 10 sales-psychology principles, four discovery-and-design experts (SEO; GEO for being cited in AI answers; AEO via schema; a UI/UX designer that picks from 50 design languages and ships a full juice-and-polish motion system — magnetic buttons, spotlight cards, count-up tickers, scroll-stacking, animated backgrounds — from a vanilla motion toolkit), and a five-agent ad-creative squad producing platform-ready 9:16/1:1/16:9 video ads with 3-second hooks for TikTok, Reels, Meta and Google. Real brand logos, never fabricated proof. Use it to validate, launch, or market a product — landing or waitlist pages, copy, positioning, pricing, conversion, SEO, GEO, AEO, or ad creatives. Produces English strategy, a designed validation or launch site, schema/sitemap/robots/llms.txt, and ad-creative videos.
 license: MIT
 metadata:
-  version: "1.0.0"
+  version: "1.1.0"
 ---
 
 # Hunch
@@ -64,7 +64,7 @@ The 10 Instagram principles ("Dad of Startup") become 10 specialist agents that 
 | **FACET** | Feature creatives — one creative per feature/angle |
 | **FRAME** | Format & platform engineer — renders each as a video-creative at exact platform resolutions |
 
-Full specs (mission, inputs, method, deliverable, hand-offs, failure modes) for all 19 + ATLAS are in **`references/agents.md`** — read it before running. Principle playbooks: **`references/principles.md`**. SEO/GEO/AEO: **`references/discovery-seo-geo-aeo.md`**. Design + motion: **`references/ui-ux-motion.md`**. The 50 design languages: **`references/design-languages.md`**. Ad-creative (UA video) playbook: **`references/ad-creatives.md`**. Real brand logos (YouTube, TikTok, Apple, Google…): **`references/brand-assets.md`**.
+Full specs (mission, inputs, method, deliverable, hand-offs, failure modes) for all 19 + ATLAS are in **`references/agents.md`** — read it before running. Principle playbooks: **`references/principles.md`**. SEO/GEO/AEO: **`references/discovery-seo-geo-aeo.md`**. Design + motion: **`references/ui-ux-motion.md`**. The vanilla juice/motion recipe book (magnetic buttons, spotlight cards, count-up tickers, aurora backgrounds, scroll-stacking, text reveals…): **`references/motion-toolkit.md`**. The 50 design languages: **`references/design-languages.md`**. Ad-creative (UA video) playbook: **`references/ad-creatives.md`**. Real brand logos (YouTube, TikTok, Apple, Google…): **`references/brand-assets.md`**.
 
 ## Modes
 
@@ -115,13 +115,13 @@ Four experts read the finished messaging + Brief and run in parallel. See `refer
 - **SUMMIT (SEO)** maps keywords/intent to COMPASS's vocabulary, **decides whether one page suffices or a multi-page site is needed** (and specs the page set: e.g. landing + comparison/"alternative-to" pages + use-case pages + an answers hub), and produces the on-page spec (one H1, heading hierarchy, titles, meta, internal links, URLs, alt text) and the technical-SEO checklist (sitemap, robots, canonical, Open Graph, mobile, Core Web Vitals/performance).
 - **ECHO (GEO)** makes the content *citable by AI engines*: self-contained, specific, quotable claims (built from PRISM's stats), a clear entity definition of the product, comparison/"best X for Y" structures LLMs extract, an `llms.txt`, and an off-page corroboration plan.
 - **ORACLE (AEO)** makes the site *the answer*: harvests the real questions buyers ask, writes answer-first copy (the question answered in the first 1–2 sentences, then expanded), and produces the **schema.org JSON-LD** blocks (FAQPage, Product/SoftwareApplication, Organization, BreadcrumbList, HowTo).
-- **AURORA (UI/UX)** derives a **bespoke design language** that reflects the *spirit* of the product (color, type, spacing, signature — grounded in the subject's world, not a generic default), and a **motion system** delivering full juice and polish (load orchestration, scroll reveals, hover micro-interactions, the signature animated moment) — to a high bar, while respecting reduced-motion and performance.
+- **AURORA (UI/UX)** derives a **bespoke design language** that reflects the *spirit* of the product (color, type, spacing, signature — grounded in the subject's world, not a generic default), and a **motion system** delivering full juice and polish. AURORA ships the **juice contract** from `motion-toolkit.md`: the §0 baseline (reveal harness driving the hero load sequence *and* scroll reveals) + one ambient background + one scroll-choreography move + one signature moment that *demonstrates the product* + live micro-interactions on every button and card. The motion personality is routed by the chosen design language's family (terminal → typewriter/scramble; premium → shine-sweeps; playful → magnetic/squash) — **never the old static fade-up-and-done** — while respecting reduced-motion and performance.
 
 ### Phase 6 — Synthesis (ATLAS)
 
 Assemble everything into a coherent, shippable system:
 - **`strategy.md`** per `references/strategy-blueprint.md` (now including the Visibility & Discovery section and the design direction).
-- **The site** per `references/website-blueprint.md` — single- or multi-page as SUMMIT specced — built to **AURORA's design + motion language** (read `frontend-design/SKILL.md`; `assets/landing-page-template.html` is a scaffold to adapt, not ship as-is), with **ORACLE's JSON-LD** and full `<head>` SEO/meta baked in, **ECHO's citable blocks** placed in the copy, and **SUMMIT's internal links** funnelling to the offer.
+- **The site** per `references/website-blueprint.md` — single- or multi-page as SUMMIT specced — built to **AURORA's design + motion language** (read `frontend-design/SKILL.md`; wire in the juice contract from `references/motion-toolkit.md`; `assets/landing-page-template.html` is a scaffold that already demonstrates the baseline juice — adapt it, don't ship as-is), with **ORACLE's JSON-LD** and full `<head>` SEO/meta baked in, **ECHO's citable blocks** placed in the copy, and **SUMMIT's internal links** funnelling to the offer.
 - **`sitemap.xml`, `robots.txt`, `llms.txt`** and (recommended) `design-system.md` + `discovery.md`.
 
 Run the **final coherence check** (below), then save and present.
@@ -154,7 +154,7 @@ Maintain one markdown/JSON document all agents read and write. Sections:
 ## aeo            [ORACLE]  question→answer set · schema.org JSON-LD inventory · answer-first patterns
 ## mode           [ATLAS]   launch | validation (waitlist) — default validation when no live product
 ## design_language[AURORA]  chosen language(s) from the 50 (+ why) · style card (hero/buttons/panels/titles) · material system (radius/border/shadow/button/surface)
-## design_system  [AURORA]  color/type/space tokens · signature · motion spec
+## design_system  [AURORA]  color/type/space tokens · signature · motion spec (juice-contract recipes from motion-toolkit.md: ambient bg · signature moment · button/card micro-interactions)
 ## creatives      [REEL]    (on demand) the creative matrix: angle × platform × format × hook × design treatment
 ```
 
@@ -191,8 +191,9 @@ Apply in order when agents clash:
 - [ ] **Not the default direction** — not the first aesthetic an AI reaches for (not the dark-SaaS-neon / soft-pastel / editorial-serif / gradient-everything defaults, not the centered-headline-+-two-buttons-+-3-cards template). A point of view a human designer would choose for *this* product.
 - [ ] **Typography** — a clean modern grotesque workhorse (Inter or an Inter-family-style peer) for body and headings; **no** novelty/decorative-serif/trendy-display font doing the heavy lifting; character earned from scale, weight contrast, and tracking. A mono/second face only with a real reason.
 - [ ] **Original components** — 2–3 genuinely custom, branded elements; bullets, cards, steppers/progress, stats, and icons are not the generic defaults (check-circles, identical gradient-card trios, flat bars, stock line icons).
-- [ ] Full, polished motion: a deliberate load sequence, scroll reveals, hover micro-interactions, a signature moment — executed with restraint.
-- [ ] Quality floor: responsive to mobile, visible keyboard focus, `prefers-reduced-motion` respected, semantic HTML, sufficient contrast.
+- [ ] **The juice contract (`motion-toolkit.md` §7)** — the page *moves*: baseline reveal harness (hero load sequence + scroll reveals), one ambient background, one scroll-choreography move (sticky-condense nav + progress at minimum), live micro-interactions on every button/card (no dead hovers), and exactly one signature moment that demonstrates the product. **Not the old static fade-up-and-done**, and not over-juiced either (one ambient, one signature — not five).
+- [ ] **Motion matches the language** — the motion personality comes from the chosen design language's family (`motion-toolkit.md` → Signature juice by family), not a generic set of effects bolted on.
+- [ ] Quality floor: responsive to mobile, visible keyboard focus, `prefers-reduced-motion` respected, semantic HTML, sufficient contrast, no layout shift, GPU-only animation.
 - [ ] **The glance test** — a discerning designer would not flag it as AI-generated at a glance.
 - [ ] **Real brand logos** — every social platform / company reference (rows, "publish to / sign in with / download on" CTAs, footers) uses the official logo in its correct mark and color (`brand-assets.md`), never emoji or letters; sign-in/store CTAs follow Apple/Google guidelines.
 - [ ] **Style-card consistency** — hero concept, buttons, panels, and titles all reflect the one chosen design language (not a mix of defaults).
@@ -216,8 +217,9 @@ Apply in order when agents clash:
 | `references/agents.md` | Before running — full spec for all 19 agents + ATLAS |
 | `references/principles.md` | Applying a sales principle |
 | `references/discovery-seo-geo-aeo.md` | Phase 5 — SEO architecture, GEO citability, AEO schema (with copy-paste JSON-LD, llms.txt, sitemap, robots templates) |
-| `references/ui-ux-motion.md` | Phase 5 — deriving the design language + the juice/polish motion system |
-| `references/design-languages.md` | Phase 5 — the catalog of 50 design languages AURORA selects from or mixes (each a style card driving hero/buttons/panels/titles + video idiom) |
+| `references/ui-ux-motion.md` | Phase 5 — deriving the design language + the juice/polish motion system (philosophy + the juice contract) |
+| `references/motion-toolkit.md` | Phase 5/6 — the vanilla CSS/JS recipe book: ~30 copy-paste juice recipes (magnetic buttons, spotlight/3D-tilt cards, border-beam, count-up tickers, text reveal/scramble/typewriter, aurora backgrounds, scroll-stacking cards, marquees, cursor trails) + the Signature-juice-by-family map |
+| `references/design-languages.md` | Phase 5 — the catalog of 50 design languages AURORA selects from or mixes (each a style card driving hero/buttons/panels/titles + signature juice + video idiom) |
 | `references/brand-assets.md` | Real, official brand logos (verified SVGs + colors) + Apple/Google sign-in & store-badge rules |
 | `references/ad-creatives.md` | On demand — the UA ad-creative (video) playbook: squad, hooks, platform specs, the animated HTML technique, the creative matrix |
 | `references/strategy-blueprint.md` | Phase 6 — structuring `strategy.md` |

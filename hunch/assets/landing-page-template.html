@@ -2,24 +2,39 @@
 <html lang="en">
 <!--
   ============================================================================
-  SALES ARCHITECT — LANDING PAGE SCAFFOLD
+  HUNCH — LANDING PAGE SCAFFOLD  (juice + polish reference)
   ============================================================================
-  This is a WORKING, ANNOTATED reference page. It is filled with a sample
-  product ("Tempo", a freelance-invoicing app) so it renders as a real,
-  conversion-optimized example. To use it:
+  A WORKING, ANNOTATED reference page filled with a sample product ("Tempo", a
+  freelance-invoicing app) so it renders as a real, conversion-optimized, and
+  *animated* example — not a static template. It demonstrates the baseline
+  motion contract from references/motion-toolkit.md:
 
-    1. Read references/website-blueprint.md (section map) and
-       frontend-design/SKILL.md (design a bespoke look for THIS product).
-    2. Re-theme the design tokens in :root (marked RE-THEME) — do not ship
-       the sample palette/type unchanged.
-    3. Replace every [SLOT ...] with copy from the Campaign Brief, keeping the
-       owning agent's intent (noted in each section comment).
-    4. Replace every [REPLACE ...] proof block with REAL proof, or keep it as a
-       clearly-labeled placeholder + a collection plan in strategy.md.
-       NEVER present invented proof as real (honesty gate).
+    · reveal harness (hero load sequence + scroll reveals)   [§0]
+    · word-reveal hero headline                              [§1.1]
+    · count-up number tickers on stats                       [§1.4]
+    · magnetic primary CTA + shimmer + press physics         [§2]
+    · cursor-tracked spotlight cards                          [§3.1]
+    · animated aurora background + cursor-reactive hero tint  [§4.1/§4.4]
+    · sticky nav that condenses + scroll-progress bar        [§5.4/§5.5]
+
+  To use it:
+    1. Read references/website-blueprint.md (section map), ui-ux-motion.md
+       (design a bespoke look for THIS product), and motion-toolkit.md (pick the
+       signature juice for the chosen design language's family).
+    2. Re-theme the design tokens in :root (marked RE-THEME) — do not ship the
+       sample palette/type/radius/shadow unchanged. Vary the MATERIAL system per
+       product (0px hard edges vs 24px pillowy, offset vs ambient shadow).
+    3. Swap in the family's signature juice from motion-toolkit.md — this file
+       ships the baseline; a terminal product would add a typewriter, a premium
+       one a shine-sweep + Ken-Burns, etc. Don't ship every effect on every site.
+    4. Replace every [SLOT ...] with copy from the Campaign Brief; replace every
+       [REPLACE ...] proof block with REAL proof or a clearly-labeled placeholder
+       + a collection plan in strategy.md. NEVER present invented proof as real.
     5. Pass the whole page through PRISM's specificity checklist before shipping.
 
-  Each <section> below is annotated:  JOB · PRINCIPLES (Pn) · AGENT(S).
+  Each <section> is annotated:  JOB · PRINCIPLES (Pn) · AGENT(S).
+  All motion respects prefers-reduced-motion (see the master switch at the end
+  of <style> and the R.reduce guards in <script>).
   ============================================================================
 -->
 <head>
@@ -28,7 +43,7 @@
 <title>Tempo — Get paid on time, every time</title>
 <meta name="description" content="Tempo is the invoicing app that sends and chases for you, so freelancers get paid ~9 days sooner without a single awkward reminder." />
 
-<!-- Fonts load in the user's browser. Swap per product (frontend-design). Robust system fallbacks included. -->
+<!-- Fonts load in the user's browser. Swap per product (ui-ux-motion.md → Type). Robust system fallbacks included. -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -47,6 +62,7 @@
     --paper-2:    #F2EFE8;  /* alt section background */
     --accent:     #1F8A5B;  /* emerald — money/paid/go; primary CTA */
     --accent-ink: #14603e;  /* darker emerald for hovers/text-on-light */
+    --accent-2:   #2FB37A;  /* lighter emerald — for gradients/beams */
     --gold:       #E8B04B;  /* warm highlight, scarcity, underlines */
     --muted:      #5B6B82;  /* secondary text */
     --danger:     #C2452D;  /* the "Before"/pain side only */
@@ -57,9 +73,17 @@
     --font-body:    "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 
     --maxw: 1080px;
-    --radius: 14px;
+    --radius: 14px;   /* RE-THEME: vary per material system (0 hard-edged … 28 pillowy) */
     --shadow: 0 12px 40px -18px rgba(20,35,58,.35);
-    --ease: cubic-bezier(.2,.7,.2,1);
+
+    /* ---- MOTION TOKENS (motion-toolkit.md §0.1) ---- */
+    --ease:          cubic-bezier(.16,.84,.28,1);   /* alias kept for legacy rules */
+    --ease-out:      cubic-bezier(.16,.84,.28,1);   /* entrances, reveals */
+    --ease-in-out:   cubic-bezier(.65,0,.35,1);     /* moves, toggles */
+    --ease-spring:   cubic-bezier(.34,1.56,.64,1);  /* playful overshoot — sparingly */
+    --ease-emphatic: cubic-bezier(.22,1,.36,1);     /* long, luxurious slides */
+    --dur-fast: 140ms; --dur: 300ms; --dur-slow: 620ms; --dur-xslow: 1100ms;
+    --stagger: 90ms;
   }
 
   /* ---- reset / base ---- */
@@ -72,6 +96,7 @@
     background: var(--paper);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
   }
   h1, h2, h3 { font-family: var(--font-display); line-height: 1.05; margin: 0 0 .4em; letter-spacing: -.02em; }
   h1 { font-size: clamp(2.3rem, 6vw, 4.1rem); font-weight: 800; }
@@ -79,40 +104,82 @@
   h3 { font-size: clamp(1.15rem, 2.2vw, 1.4rem); font-weight: 700; }
   p  { margin: 0 0 1rem; }
   a  { color: var(--accent-ink); text-decoration-color: var(--gold); text-underline-offset: 3px; }
-  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; position: relative; }
   section { padding: clamp(56px, 9vw, 104px) 0; }
   .eyebrow { font-family: var(--font-display); font-weight: 700; text-transform: uppercase; letter-spacing: .12em; font-size: .82rem; color: var(--accent-ink); margin-bottom: .9rem; }
   .lead { font-size: clamp(1.05rem, 1.6vw, 1.25rem); color: var(--muted); max-width: 60ch; }
+
+  /* ---- scroll progress bar (toolkit §5.5) ---- */
+  .progress { position: fixed; top: 0; left: 0; height: 3px; width: 100%; transform-origin: 0 50%; transform: scaleX(0); background: linear-gradient(90deg, var(--accent), var(--accent-2)); z-index: 100; }
 
   /* ---- buttons (CTA: same verb hero→close) ---- */
   .btn {
     display: inline-flex; align-items: center; gap: .5rem;
     background: var(--accent); color: #fff; font-family: var(--font-display); font-weight: 700;
     font-size: .95rem; line-height: 1; letter-spacing: -.01em; padding: .72rem 1.3rem; border: 0; border-radius: 999px; cursor: pointer;
-    text-decoration: none; transition: transform .15s var(--ease), box-shadow .15s var(--ease), background .15s var(--ease);
+    text-decoration: none; position: relative; overflow: hidden;
+    transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
     box-shadow: 0 6px 16px -8px rgba(31,138,91,.55);
   }
-  .btn:hover { transform: translateY(-1px); background: var(--accent-ink); box-shadow: 0 10px 22px -10px rgba(31,138,91,.65); }
-  .btn:active { transform: translateY(0); box-shadow: 0 4px 10px -7px rgba(31,138,91,.6); }
+  .btn:hover { transform: translateY(-2px); background: var(--accent-ink); box-shadow: 0 12px 26px -10px rgba(31,138,91,.7); }
+  .btn:active { transform: translateY(0) scale(.97); box-shadow: 0 4px 10px -7px rgba(31,138,91,.6); }
+  .btn .label { display: inline-flex; align-items: center; gap: .5rem; transition: transform var(--dur) var(--ease-out); }
+  /* shimmer sweep on hover (toolkit §2.2) */
+  .btn::after { content: ""; position: absolute; inset: 0; transform: translateX(-120%) skewX(-20deg); background: linear-gradient(90deg, transparent, rgba(255,255,255,.28), transparent); transition: transform .7s var(--ease-out); pointer-events: none; }
+  .btn:hover::after { transform: translateX(120%) skewX(-20deg); }
   .btn--ghost { background: transparent; color: var(--ink); box-shadow: none; border: 1.5px solid var(--line); }
-  .btn--ghost:hover { background: var(--paper-2); border-color: var(--accent); transform: translateY(-1px); }
+  .btn--ghost::after { display: none; }
+  .btn--ghost:hover { background: var(--paper-2); border-color: var(--accent); transform: translateY(-2px); }
   .btn--lg { font-size: 1.02rem; padding: .9rem 1.6rem; }
   .btn:focus-visible, a:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
   .cta-note { font-size: .9rem; color: var(--muted); margin-top: .7rem; }
+  /* magnetic wrapper — reserves the transform so JS can nudge it (toolkit §2.1) */
+  .magnetic { display: inline-block; transition: transform var(--dur) var(--ease-spring); }
 
-  /* ---- nav ---- */
-  header.nav { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--paper) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
-  .nav__row { display: flex; align-items: center; justify-content: space-between; height: 66px; }
+  /* ---- nav (sticky + condense on scroll, toolkit §5.4) ---- */
+  header.nav { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--paper) 80%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid transparent; transition: border-color var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out); }
+  header.nav.shrink { border-color: var(--line); box-shadow: 0 8px 24px -20px rgba(20,35,58,.5); }
+  .nav__row { display: flex; align-items: center; justify-content: space-between; height: 74px; transition: height var(--dur) var(--ease-out); }
+  header.nav.shrink .nav__row { height: 60px; }
   .brand { font-family: var(--font-display); font-weight: 800; font-size: 1.35rem; letter-spacing: -.03em; color: var(--ink); text-decoration: none; }
   .brand span { color: var(--accent); }
   .nav__links { display: flex; gap: 26px; align-items: center; }
-  .nav__links a:not(.btn) { color: var(--ink); text-decoration: none; font-weight: 500; font-size: .96rem; }
+  .nav__links a:not(.btn) { color: var(--ink); text-decoration: none; font-weight: 500; font-size: .96rem; position: relative; }
+  .nav__links a:not(.btn)::after { content: ""; position: absolute; left: 0; right: 100%; bottom: -4px; height: 2px; background: var(--accent); transition: right var(--dur) var(--ease-out); }
   .nav__links a:not(.btn):hover { color: var(--accent-ink); }
+  .nav__links a:not(.btn):hover::after { right: 0; }
   @media (max-width: 760px){ .nav__links a:not(.btn){ display:none; } }
 
+  /* ========================================================================
+     REVEAL HARNESS (motion-toolkit.md §0.2) — one observer, many entrances.
+     Drives BOTH the hero load sequence and every scroll reveal.
+     ======================================================================== */
+  [data-reveal]{ opacity:0; transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out), filter var(--dur-slow) var(--ease-out); will-change: opacity, transform; }
+  [data-reveal="up"]    { transform: translateY(28px); }
+  [data-reveal="scale"] { transform: scale(.94); }
+  [data-reveal="blur"]  { filter: blur(14px); transform: translateY(18px); }
+  [data-reveal="clip"]  { clip-path: inset(0 0 100% 0); }
+  [data-reveal].in{ opacity:1; transform:none; filter:none; clip-path: inset(0 0 0 0); will-change:auto; }
+  [data-stagger]>*{ opacity:0; transform: translateY(22px); transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out); }
+  [data-stagger].in>*{ opacity:1; transform:none; transition-delay: calc(var(--i,0) * var(--stagger)); }
+
   /* ---- hero (SECTION 1) ---- */
-  .hero { padding-top: clamp(48px, 7vw, 90px); }
+  .hero { position: relative; padding-top: clamp(56px, 8vw, 100px); isolation: isolate; overflow: hidden; }
+  /* animated aurora + cursor-reactive tint (toolkit §4.1 + §4.4) */
+  .hero::before { content:""; position:absolute; inset:-30%; z-index:-2; filter: blur(70px); opacity:.5; pointer-events:none;
+    background:
+      radial-gradient(38% 44% at 22% 26%, var(--accent-2) 0, transparent 60%),
+      radial-gradient(30% 38% at 80% 30%, var(--gold) 0, transparent 60%),
+      radial-gradient(42% 48% at 55% 82%, var(--accent) 0, transparent 60%);
+    animation: auroraDrift 22s var(--ease-in-out) infinite alternate; }
+  .hero::after { content:""; position:absolute; inset:0; z-index:-1; pointer-events:none;
+    background: radial-gradient(560px circle at var(--px,60%) var(--py,20%), color-mix(in srgb, var(--accent) 10%, transparent), transparent 68%); }
+  @keyframes auroraDrift { 0%{ transform: translate3d(-4%,-2%,0) rotate(0deg) scale(1.05);} 100%{ transform: translate3d(4%,3%,0) rotate(8deg) scale(1.16);} }
   .hero h1 .hl { color: var(--accent); }
+  /* word-reveal for the headline (toolkit §1.1) */
+  .split-line { display: inline; }
+  .split-line .w { display: inline-block; opacity: 0; transform: translateY(.5em) rotate(2deg); filter: blur(6px); animation: wordIn .7s var(--ease-out) forwards; animation-delay: calc(var(--wi) * 60ms); }
+  @keyframes wordIn { to { opacity:1; transform:none; filter:none; } }
   .hero .lead { margin: 1.2rem 0 1.8rem; color: var(--ink-soft); }
   .hero__cta { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
   .proof-strip { display:flex; gap: 22px; flex-wrap: wrap; align-items: center; margin-top: 1.9rem; padding-top: 1.4rem; border-top: 1px solid var(--line); }
@@ -131,9 +198,10 @@
   /* ---- transformation before/after (SECTION 3) ---- */
   .ba { display:grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 2rem; }
   @media (max-width: 720px){ .ba { grid-template-columns: 1fr; } }
-  .ba__col { border-radius: var(--radius); padding: 26px; }
+  .ba__col { border-radius: var(--radius); padding: 26px; transition: transform var(--dur) var(--ease-out); }
   .ba__before { background: var(--paper-2); border: 1px solid var(--line); }
   .ba__after  { background: var(--card); border: 2px solid var(--accent); box-shadow: var(--shadow); }
+  .ba__after:hover { transform: translateY(-4px); }
   .ba__col h3 { display:flex; align-items:center; gap:.5rem; }
   .ba__tag { font-family: var(--font-display); font-size:.72rem; text-transform:uppercase; letter-spacing:.1em; padding:.2rem .6rem; border-radius:999px; }
   .ba__before .ba__tag { background:#f2ddd7; color: var(--danger); }
@@ -144,15 +212,19 @@
   .ba__after  li::before { content:"✓"; position:absolute; left:0; color: var(--accent); font-weight:700; }
   .ba__statement { text-align:center; max-width: 46ch; margin: 0 auto; font-family:var(--font-display); font-weight:700; font-size: clamp(1.2rem,2.4vw,1.6rem); }
 
-  /* ---- benefits (SECTION 4) ---- */
+  /* ---- benefits (SECTION 4) — cursor-tracked spotlight cards (toolkit §3.1) ---- */
   .benefits { background: var(--paper-2); }
   .grid3 { display:grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-top: 2.2rem; }
   @media (max-width: 860px){ .grid3 { grid-template-columns: 1fr; } }
-  .bcard { background: var(--card); border:1px solid var(--line); border-radius: var(--radius); padding: 26px; }
-  .bcard .ico { width:42px;height:42px;border-radius:11px;background: #d8f0e4; display:grid;place-items:center; margin-bottom:14px; font-size:1.3rem; }
-  .bcard h3 { margin-bottom:.35rem; }            /* heading = OUTCOME (BEACON) */
-  .bcard .mech { font-size:.92rem; color: var(--muted); }   /* feature = mechanism */
-  .bcard .micro { margin-top:.9rem; font-size:.85rem; font-weight:600; color: var(--accent-ink); }
+  .bcard { position: relative; overflow: hidden; background: var(--card); border:1px solid var(--line); border-radius: var(--radius); padding: 26px; transition: transform var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out); }
+  .bcard::before { content:""; position:absolute; inset:0; opacity:0; transition: opacity var(--dur); pointer-events:none;
+    background: radial-gradient(240px circle at var(--mx,50%) var(--my,50%), color-mix(in srgb, var(--accent) 20%, transparent), transparent 60%); }
+  .bcard:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+  .bcard:hover::before { opacity:1; }
+  .bcard .ico { width:42px;height:42px;border-radius:11px;background: #d8f0e4; display:grid;place-items:center; margin-bottom:14px; font-size:1.3rem; position:relative; }
+  .bcard h3 { margin-bottom:.35rem; position:relative; }        /* heading = OUTCOME (BEACON) */
+  .bcard .mech { font-size:.92rem; color: var(--muted); position:relative; }  /* feature = mechanism */
+  .bcard .micro { margin-top:.9rem; font-size:.85rem; font-weight:600; color: var(--accent-ink); position:relative; }
 
   /* ---- proof (SECTION 5) ---- */
   .proof-band { display:flex; justify-content:center; gap: clamp(24px,6vw,72px); flex-wrap:wrap; text-align:center; margin-bottom: 2.6rem; }
@@ -160,7 +232,8 @@
   .proof-band .stat span { color: var(--muted); font-size:.9rem; }
   .quotes { display:grid; grid-template-columns: repeat(3,1fr); gap:20px; }
   @media (max-width: 860px){ .quotes { grid-template-columns: 1fr; } }
-  .quote { background: var(--card); border:1px solid var(--line); border-radius: var(--radius); padding: 24px; }
+  .quote { background: var(--card); border:1px solid var(--line); border-radius: var(--radius); padding: 24px; transition: transform var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out); }
+  .quote:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
   .quote p { font-size:1.02rem; }
   .quote .who { display:flex; align-items:center; gap:12px; margin-top:14px; }
   .quote .av { width:40px;height:40px;border-radius:50%; background: linear-gradient(135deg,var(--accent),var(--ink)); flex:0 0 auto; }
@@ -169,10 +242,12 @@
   .placeholder { outline: 2px dashed var(--gold); outline-offset:-2px; }
   .placeholder::before { content:"PLACEHOLDER — replace with real proof"; display:block; font-size:.7rem; letter-spacing:.08em; text-transform:uppercase; color:#9a7a1f; margin-bottom:.6rem; }
 
-  /* ---- offer (SECTION 6) ---- */
+  /* ---- offer (SECTION 6) — shine sweep on hover (toolkit §3.3) ---- */
   .offer { background: var(--ink); color:#EAF0F7; }
   .offer h2 { color:#fff; }
-  .offer__card { background: var(--card); color: var(--ink); border-radius: 20px; padding: clamp(28px,4vw,42px); box-shadow: var(--shadow); max-width: 720px; margin: 2rem auto 0; }
+  .offer__card { position: relative; overflow: hidden; background: var(--card); color: var(--ink); border-radius: 20px; padding: clamp(28px,4vw,42px); box-shadow: var(--shadow); max-width: 720px; margin: 2rem auto 0; }
+  .offer__card::after { content:""; position:absolute; top:-50%; left:-60%; width:40%; height:200%; transform: rotate(25deg) translateX(-140%); background: linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent); transition: transform .9s var(--ease-out); pointer-events:none; }
+  .offer__card:hover::after { transform: rotate(25deg) translateX(360%); }
   .offer__name { font-family:var(--font-display); font-weight:800; font-size: clamp(1.5rem,3vw,2rem); }
   .offer__stack { list-style:none; padding:0; margin:1.4rem 0; display:grid; gap:.85rem; }
   .offer__stack li { padding-left:30px; position:relative; }
@@ -184,7 +259,8 @@
 
   /* ---- pricing (SECTION 7) ---- */
   .pricing { background: var(--paper-2); text-align:center; }
-  .price-card { background: var(--card); border:2px solid var(--accent); border-radius: 20px; max-width: 440px; margin: 2rem auto 0; padding: 34px; box-shadow: var(--shadow); }
+  .price-card { position: relative; overflow: hidden; background: var(--card); border:2px solid var(--accent); border-radius: 20px; max-width: 440px; margin: 2rem auto 0; padding: 34px; box-shadow: var(--shadow); transition: transform var(--dur) var(--ease-out); }
+  .price-card:hover { transform: translateY(-4px); }
   .price-anchor { color: var(--muted); text-decoration: line-through; font-size:1.1rem; }   /* the anchor */
   .price-now { font-family:var(--font-display); font-weight:800; font-size: clamp(2.6rem,6vw,3.4rem); color: var(--ink); line-height:1; }
   .price-now small { font-size:1rem; font-weight:600; color: var(--muted); }
@@ -195,8 +271,8 @@
   details.faq { border-bottom:1px solid var(--line); padding: 18px 0; max-width: 760px; margin: 0 auto; }
   details.faq summary { font-family:var(--font-display); font-weight:700; font-size:1.1rem; cursor:pointer; list-style:none; display:flex; justify-content:space-between; gap:1rem; }
   details.faq summary::-webkit-details-marker { display:none; }
-  details.faq summary::after { content:"+"; color: var(--accent); font-size:1.4rem; line-height:1; }
-  details.faq[open] summary::after { content:"–"; }
+  details.faq summary::after { content:"+"; color: var(--accent); font-size:1.4rem; line-height:1; transition: transform var(--dur) var(--ease-spring); }
+  details.faq[open] summary::after { content:"–"; transform: rotate(180deg); }
   details.faq p { margin: .9rem 0 0; color: var(--muted); }
 
   /* ---- final cta (SECTION 9) ---- */
@@ -210,17 +286,21 @@
   .ft__row { display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap; align-items:center; }
   .ft a { color:#BACBE0; text-decoration:none; margin-left:18px; font-size:.92rem; }
 
-  /* ---- scroll reveal (respects reduced motion) ---- */
-  .reveal { opacity:0; transform: translateY(18px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
-  .reveal.in { opacity:1; transform:none; }
+  /* ========================================================================
+     REDUCED-MOTION MASTER SWITCH (motion-toolkit.md §0.3) — neutralize
+     every recipe for users who ask for less motion. Non-negotiable.
+     ======================================================================== */
   @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior:auto; }
-    .reveal { opacity:1 !important; transform:none !important; transition:none; }
-    .btn { transition:none; }
+    *,*::before,*::after { animation-duration:.001ms!important; animation-iteration-count:1!important; transition-duration:.001ms!important; scroll-behavior:auto!important; }
+    [data-reveal],[data-stagger]>*,.split-line .w { opacity:1!important; transform:none!important; filter:none!important; clip-path:none!important; }
+    .hero::before { animation:none!important; }
   }
 </style>
 </head>
 <body>
+
+<!-- scroll progress bar (toolkit §5.5) -->
+<div class="progress" aria-hidden="true"></div>
 
 <!-- ====================== SECTION 0 · NAV ====================== -->
 <!-- JOB: orient + keep CTA reachable.  AGENT: ATLAS -->
@@ -231,7 +311,7 @@
       <a href="#how">How it helps</a>
       <a href="#proof">Proof</a>
       <a href="#pricing">Pricing</a>
-      <a class="btn" href="#pricing">Get paid →</a>
+      <a class="btn" href="#pricing"><span class="label">Get paid →</span></a>
     </nav>
   </div>
 </header>
@@ -241,25 +321,28 @@
 <!-- ====================== SECTION 1 · HERO (the thesis) ====================== -->
 <!-- JOB: pain + transformation + core promise in one screen.
      P3 pain · P2 transformation · P6 ego+fear · P4 buyer vocabulary · P1 emotion.
-     AGENTS: EDGE (headline) · METAMORPH (sub) · CHORUS (proof strip) -->
+     AGENTS: EDGE (headline) · METAMORPH (sub) · CHORUS (proof strip)
+     MOTION: staggered load sequence + word-reveal headline + aurora ambient. -->
 <section class="hero">
-  <div class="wrap">
+  <div class="wrap" data-stagger data-reveal>
     <p class="eyebrow">For freelancers tired of chasing payment</p>
     <!-- [SLOT hero headline — EDGE: transformation fused with ego+fear, specific] -->
-    <h1>Stop chasing invoices.<br>Become the freelancer who <span class="hl">gets paid on time.</span></h1>
+    <!-- data-split="word" → each word rises + unblurs in sequence on load -->
+    <h1>Stop chasing invoices.<br><span data-split="word">Become the freelancer who gets paid on time.</span></h1>
     <!-- [SLOT sub-headline — METAMORPH: Before→After in the buyer's words] -->
     <p class="lead">Tempo sends and chases your invoices automatically — so you get paid about <strong>9 days sooner</strong>, without sending a single awkward reminder.</p>
     <div class="hero__cta">
-      <a class="btn btn--lg" href="#pricing">Get paid on time →</a>
-      <a class="btn btn--ghost btn--lg" href="#how">See how it works</a>
+      <!-- the ONE primary CTA gets the magnetic signature (toolkit §2.1) -->
+      <span class="magnetic"><a class="btn btn--lg" href="#pricing"><span class="label">Get paid on time →</span></a></span>
+      <a class="btn btn--ghost btn--lg" href="#how"><span class="label">See how it works</span></a>
     </div>
     <p class="cta-note">Free for your first 3 invoices · No card required</p>
 
-    <!-- hero proof strip — belief arrives with the ask (CHORUS) -->
+    <!-- hero proof strip — belief arrives with the ask (CHORUS). Numbers count up on view. -->
     <div class="proof-strip">
-      <div class="stat"><b>9 days</b><span>paid sooner, on average</span></div>
-      <div class="stat"><b>1,240+</b><span>freelancers · [REPLACE with real count]</span></div>
-      <div class="stat"><b>$1,900/yr</b><span>recovered per user · [REPLACE]</span></div>
+      <div class="stat"><b data-count="9" data-suf=" days"></b><span>paid sooner, on average</span></div>
+      <div class="stat"><b data-count="1240" data-suf="+"></b><span>freelancers · [REPLACE with real count]</span></div>
+      <div class="stat"><b data-count="1900" data-pre="$" data-suf="/yr"></b><span>recovered per user · [REPLACE]</span></div>
     </div>
   </div>
 </section>
@@ -267,7 +350,7 @@
 <!-- ====================== SECTION 2 · THE PAIN ====================== -->
 <!-- JOB: "this is you" — sharpen urgency before relief.
      P3 pain + cost of inaction · P1 emotion · P6 fear axis.  AGENT: LANCE -->
-<section class="pain reveal" id="pain">
+<section class="pain" id="pain" data-reveal="up">
   <div class="wrap">
     <p class="eyebrow" style="color:var(--gold)">The part of freelancing nobody warns you about</p>
     <!-- [SLOT sharpest pain — LANCE: the buyer's words, the real consequence] -->
@@ -284,12 +367,14 @@
 
 <!-- ====================== SECTION 3 · TRANSFORMATION (Before → After) ====================== -->
 <!-- JOB: show the prize — who they become.
-     P2 transformation · P5 outcomes not features · P1 felt After.  AGENT: METAMORPH -->
-<section class="transform reveal" id="transform">
+     P2 transformation · P5 outcomes not features · P1 felt After.  AGENT: METAMORPH
+     NOTE: for a stronger signature, swap the two columns for the before→after DRAG
+     slider (motion-toolkit.md §6.4) when there's a visual to wipe between. -->
+<section class="transform" id="transform" data-reveal="up">
   <div class="wrap">
     <p class="eyebrow">From chasing to chased-for-you</p>
     <h2>Two months from now, this is your month-end.</h2>
-    <div class="ba">
+    <div class="ba" data-stagger data-reveal>
       <div class="ba__col ba__before">
         <h3><span class="ba__tag">Without Tempo</span></h3>
         <ul>
@@ -310,19 +395,20 @@
       </div>
     </div>
     <!-- canonical transformation statement (METAMORPH owns this) -->
-    <p class="ba__statement" style="margin-top:2rem">From the freelancer who quietly waits to be paid — to the one who gets paid on time, every time, and never has to ask.</p>
+    <p class="ba__statement" style="margin-top:2rem" data-reveal="scale">From the freelancer who quietly waits to be paid — to the one who gets paid on time, every time, and never has to ask.</p>
   </div>
 </section>
 
 <!-- ====================== SECTION 4 · HOW IT HELPS (benefits) ====================== -->
 <!-- JOB: translate product → buyer's improved life.
      P5 feature→benefit→outcome · P9 specific.  AGENT: BEACON
-     Each card: heading = OUTCOME, mechanism = feature, tied to a pain. -->
-<section class="benefits reveal" id="how">
+     Each card: heading = OUTCOME, mechanism = feature, tied to a pain.
+     MOTION: cursor-tracked spotlight + hover lift (toolkit §3.1). -->
+<section class="benefits" id="how" data-reveal="up">
   <div class="wrap">
     <p class="eyebrow">What's in it for you</p>
     <h2>You get paid sooner. You never have to ask.</h2>
-    <div class="grid3">
+    <div class="grid3" data-stagger data-reveal>
       <div class="bcard">
         <div class="ico">⏱️</div>
         <h3>Get paid ~9 days sooner</h3>
@@ -349,18 +435,18 @@
 <!-- JOB: establish it works for people like the buyer.
      P7 social proof · P9 numbers.  AGENT: CHORUS
      REAL proof, or clearly-labeled placeholders + a collection plan in strategy.md. -->
-<section class="proof reveal" id="proof">
+<section class="proof" id="proof" data-reveal="up">
   <div class="wrap">
     <p class="eyebrow" style="text-align:center">The receipts</p>
     <h2 style="text-align:center">Freelancers stopped chasing — and got paid faster.</h2>
 
     <div class="proof-band" style="margin-top:2.4rem">
-      <div class="stat"><b>9 days</b><span>faster payment, on average</span></div>
-      <div class="stat"><b>1,240+</b><span>freelancers in 38 countries</span></div>
-      <div class="stat"><b>4.8/5</b><span>across 310 reviews</span></div>
+      <div class="stat"><b data-count="9" data-suf=" days"></b><span>faster payment, on average</span></div>
+      <div class="stat"><b data-count="1240" data-suf="+"></b><span>freelancers in 38 countries</span></div>
+      <div class="stat"><b data-count="4.8" data-suf="/5"></b><span>across 310 reviews</span></div>
     </div>
 
-    <div class="quotes">
+    <div class="quotes" data-stagger data-reveal>
       <figure class="quote">
         <p>"I used to dread month-end. Now invoices send and chase themselves — I was paid in a week instead of a month."</p>
         <figcaption class="who"><span class="av" aria-hidden="true"></span><span><b>[REPLACE — name]</b><span>Freelance designer</span></span></figcaption>
@@ -380,11 +466,11 @@
 <!-- ====================== SECTION 6 · THE OFFER ====================== -->
 <!-- JOB: an offer the right customer would feel foolish refusing.
      P10 strong offer · P8 right-customer value · P1 logic near the decision.  AGENT: FORGE -->
-<section class="offer reveal" id="offer">
+<section class="offer" id="offer" data-reveal="up">
   <div class="wrap">
     <p class="eyebrow" style="color:var(--gold); text-align:center">The offer</p>
     <h2 style="text-align:center">Everything you need to get paid on time.</h2>
-    <div class="offer__card">
+    <div class="offer__card" data-reveal="scale">
       <!-- [SLOT offer name — FORGE: concrete, benefit-bearing] -->
       <div class="offer__name">The Get-Paid-On-Time System</div>
       <ul class="offer__stack">
@@ -406,15 +492,15 @@
 <!-- ====================== SECTION 7 · PRICING ====================== -->
 <!-- JOB: make the price read as obviously worth it to the right customer.
      P8 value-anchored pricing · P1 logic · P9 specific value math.  AGENT: VAULT -->
-<section class="pricing reveal" id="pricing">
+<section class="pricing" id="pricing" data-reveal="up">
   <div class="wrap">
     <p class="eyebrow">Simple pricing</p>
     <h2>Costs less than one late invoice.</h2>
-    <div class="price-card">
+    <div class="price-card" data-reveal="scale">
       <div class="price-anchor">Late invoices cost you ~$1,900/yr</div>
       <div class="price-now">$19<small>/month</small></div>
       <div class="price-value">Recovers ~$1,900/yr · pays for itself with the first invoice it rescues</div>
-      <a class="btn btn--lg" href="#" style="width:100%; justify-content:center;">Get paid on time →</a>
+      <span class="magnetic" style="display:block"><a class="btn btn--lg" href="#" style="width:100%; justify-content:center;"><span class="label">Get paid on time →</span></a></span>
       <p class="cta-note">Free for your first 3 invoices · Cancel anytime</p>
       <p class="price-logic">That's ~$228/year to recover ~$1,900/year and reclaim ~150 hours you'd spend chasing. The math isn't close.</p>
     </div>
@@ -424,7 +510,7 @@
 <!-- ====================== SECTION 8 · OBJECTIONS / FAQ ====================== -->
 <!-- JOB: remove the last reasons not to buy.
      P1 logic · P7 proof per objection · P5 reassurance.  AGENT: (strategy objection-handling) -->
-<section class="faq-sec reveal" id="faq">
+<section class="faq-sec" id="faq" data-reveal="up">
   <div class="wrap">
     <h2 style="text-align:center; margin-bottom:1.6rem">Still deciding?</h2>
     <details class="faq"><summary>Will this actually get me paid faster, or just send more emails?<span></span></summary>
@@ -441,12 +527,12 @@
 <!-- ====================== SECTION 9 · FINAL CTA (the close) ====================== -->
 <!-- JOB: ask once more with promise + risk reversal in view.
      P2 restate transformation · P6 ego+fear · P10 restate guarantee · P1 emotion.  AGENT: ATLAS -->
-<section class="final reveal" id="close">
+<section class="final" id="close" data-reveal="up">
   <div class="wrap">
     <h2>Stop being the freelancer who waits to be paid.</h2>
     <p class="lead">Set up Tempo once. Get paid on time, every time — and never send an awkward reminder again.</p>
     <div class="hero__cta" style="justify-content:center; margin-top:1.6rem">
-      <a class="btn btn--lg" href="#">Get paid on time →</a>
+      <span class="magnetic"><a class="btn btn--lg" href="#"><span class="label">Get paid on time →</span></a></span>
     </div>
     <div class="guarantee"><span class="seal" aria-hidden="true">🛡️</span><div>30-day get-paid-faster guarantee. If it doesn't work, it's free.</div></div>
     <p class="cta-note" style="color:#8aa0bd; margin-top:1.4rem">Join 1,240+ freelancers who stopped chasing. [REPLACE with real count]</p>
@@ -469,25 +555,102 @@
   <div class="wrap" style="margin-top:18px; font-size:.85rem; opacity:.7">© <span id="yr"></span> Tempo — invoicing that pays you on time.</div>
 </footer>
 
+<!-- ========================================================================
+     MOTION SCRIPT — the baseline juice contract (motion-toolkit.md §0/§1/§2/§3/§5).
+     Everything degrades to instant/static under prefers-reduced-motion.
+     ======================================================================== -->
 <script>
+(function () {
+  var R = { reduce: matchMedia('(prefers-reduced-motion: reduce)').matches };
+
   // year
   document.getElementById('yr').textContent = new Date().getFullYear();
 
-  // scroll reveal — skipped entirely when the user prefers reduced motion
-  (function () {
-    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var els = document.querySelectorAll('.reveal');
-    if (reduce || !('IntersectionObserver' in window)) {
-      els.forEach(function (el) { el.classList.add('in'); });
-      return;
-    }
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-      });
-    }, { threshold: 0.12 });
-    els.forEach(function (el) { io.observe(el); });
-  })();
+  // ---- §0.2 reveal harness: hero load sequence + scroll reveals, one observer ----
+  document.querySelectorAll('[data-stagger]').forEach(function (g) {
+    [].forEach.call(g.children, function (c, i) { c.style.setProperty('--i', i); });
+  });
+  var targets = document.querySelectorAll('[data-reveal],[data-stagger]');
+  if (R.reduce || !('IntersectionObserver' in window)) {
+    targets.forEach(function (el) { el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.16, rootMargin: '0px 0px -8% 0px' });
+    targets.forEach(function (el) { io.observe(el); });
+  }
+
+  // ---- §1.1 word-reveal headline ----
+  document.querySelectorAll('[data-split="word"]').forEach(function (el) {
+    if (R.reduce) return;
+    var words = el.textContent.trim().split(/\s+/);
+    el.textContent = '';
+    el.classList.add('split-line');
+    words.forEach(function (w, i) {
+      var s = document.createElement('span');
+      s.className = 'w'; s.textContent = w; s.style.setProperty('--wi', i);
+      el.appendChild(s); el.appendChild(document.createTextNode(' '));
+    });
+  });
+
+  // ---- §1.4 count-up number tickers (fire when scrolled into view) ----
+  function countUp(el) {
+    var raw = el.dataset.count;
+    if (R.reduce) { el.textContent = (el.dataset.pre || '') + raw + (el.dataset.suf || ''); return; }
+    var target = parseFloat(raw), dec = (raw.split('.')[1] || '').length,
+        pre = el.dataset.pre || '', suf = el.dataset.suf || '', dur = 1400, t0 = performance.now();
+    (function step(t) {
+      var p = Math.min((t - t0) / dur, 1), e = 1 - Math.pow(1 - p, 3);
+      el.textContent = pre + (target * e).toFixed(dec).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + suf;
+      if (p < 1) requestAnimationFrame(step);
+    })(t0);
+  }
+  var counters = document.querySelectorAll('[data-count]');
+  if (R.reduce || !('IntersectionObserver' in window)) {
+    counters.forEach(countUp);
+  } else {
+    var cio = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { countUp(e.target); cio.unobserve(e.target); } });
+    }, { threshold: 0.6 });
+    counters.forEach(function (el) { cio.observe(el); });
+  }
+
+  // ---- §2.1 magnetic primary CTA ----
+  if (!R.reduce) document.querySelectorAll('.magnetic').forEach(function (btn) {
+    var label = btn.querySelector('.label') || btn, str = 0.32;
+    btn.addEventListener('pointermove', function (e) {
+      var r = btn.getBoundingClientRect(), x = e.clientX - r.left - r.width / 2, y = e.clientY - r.top - r.height / 2;
+      btn.style.transform = 'translate(' + (x * str) + 'px,' + (y * str) + 'px)';
+      label.style.transform = 'translate(' + (x * str * 0.4) + 'px,' + (y * str * 0.4) + 'px)';
+    });
+    btn.addEventListener('pointerleave', function () { btn.style.transform = ''; label.style.transform = ''; });
+  });
+
+  // ---- §3.1 spotlight cards: track the cursor position via CSS vars ----
+  document.querySelectorAll('.bcard').forEach(function (c) {
+    c.addEventListener('pointermove', function (e) {
+      var r = c.getBoundingClientRect();
+      c.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      c.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    });
+  });
+
+  // ---- §4.4 cursor-reactive hero tint ----
+  var hero = document.querySelector('.hero');
+  if (hero && !R.reduce) hero.addEventListener('pointermove', function (e) {
+    var r = hero.getBoundingClientRect();
+    hero.style.setProperty('--px', ((e.clientX - r.left) / r.width * 100) + '%');
+    hero.style.setProperty('--py', ((e.clientY - r.top) / r.height * 100) + '%');
+  });
+
+  // ---- §5.4 sticky nav condense + §5.5 scroll progress bar ----
+  var nav = document.querySelector('header.nav'), bar = document.querySelector('.progress'),
+      doc = document.documentElement;
+  addEventListener('scroll', function () {
+    if (nav) nav.classList.toggle('shrink', scrollY > 40);
+    if (bar) { var max = doc.scrollHeight - doc.clientHeight; bar.style.transform = 'scaleX(' + (max > 0 ? Math.min(doc.scrollTop / max, 1) : 0) + ')'; }
+  }, { passive: true });
+})();
 </script>
 </body>
 </html>
